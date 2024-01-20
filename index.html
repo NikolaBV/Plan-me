@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Plan me!</h1>
+    </header>
+
+    <div class="columns">
+      <div class="side-column">
+        <!-- Content for the left column -->
+        <h2>Left Column</h2>
+        <ul class="currentDayTaskList">
+          <li>
+            <p>17:30</p>
+            <p>Task 1</p>
+          </li>
+        </ul>
+        <div class="addnewTask">
+          <button id="addTaskButton" onclick="openAddTaskPage()">
+            Add a new task
+          </button>
+        </div>
+      </div>
+
+      <div class="main-column">
+        <!-- Content for the main (middle) column -->
+        <h1>Main Column</h1>
+        <p>There will be a calendar here</p>
+      </div>
+
+      <div class="side-column">
+        <!-- Content for the right column -->
+        <ul class="taksList">
+          <li>
+            <p>17:30</p>
+            <p>Task 1</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+  <script>
+    const { ipcRenderer } = require("electron");
+  </script>
+  <script>
+    function openAddTaskPage() {
+      // Send an event to the main process to open the addTasks.html window
+      ipcRenderer.send("open-add-task-window");
+    }
+  </script>
+</html>

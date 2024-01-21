@@ -7,8 +7,9 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    resizable: false,
     webPreferences: {
-      nodeIntegration: false, // It's important to set nodeIntegration to false
+      nodeIntegration: false,
       contextIsolation: true,
       preload: path.join(__dirname, "preload.js"),
     },
@@ -26,11 +27,13 @@ app.on("ready", () => {
 
   ipcMain.on("open-add-task-window", () => {
     let addTaskWindow = new BrowserWindow({
+      title: "Add a task",
       width: 400,
       height: 300,
       resizable: false,
       webPreferences: {
-        nodeIntegration: true,
+        nodeIntegration: false,
+        contextIsolation: true,
       },
     });
 
@@ -39,7 +42,5 @@ app.on("ready", () => {
     addTaskWindow.on("closed", function () {
       addTaskWindow = null;
     });
-
-    addTaskWindow.removeMenu();
   });
 });

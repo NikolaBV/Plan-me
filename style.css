@@ -1,8 +1,24 @@
-body {
+* {
+  padding: 0;
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
   display: flex;
   flex-direction: column;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 header {
@@ -15,6 +31,7 @@ header {
 
 .columns {
   display: flex;
+  min-height: 100vh; /* Set minimum height to 100% of viewport height */
 }
 
 .side-column {
@@ -22,6 +39,7 @@ header {
   background-color: #f2f2f2;
   padding: 20px;
   box-sizing: border-box;
+  min-height: 100%; /* Set minimum height to 100% of parent height */
 }
 
 .main-column {
@@ -29,4 +47,52 @@ header {
   background-color: #e0e0e0;
   padding: 20px;
   box-sizing: border-box;
+  min-height: 100%; /* Set minimum height to 100% of parent height */
+}
+
+ul {
+  list-style: none;
+}
+
+h2 {
+  padding-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.currentDayTaskList li {
+  background-color: #fff;
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.currentDayTaskList > li {
+  padding-left: 1rem;
+}
+
+.addnewTask {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.5rem;
+  width: 10rem;
+}
+
+.addnewTask button {
+  height: 100%;
+  width: 100%;
+  border-radius: 5rem;
+  border: 3px solid black;
+  background-color: #fff;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 350ms ease-in-out, color 350ms ease-in-out;
+}
+
+.addnewTask button:hover {
+  background-color: black;
+  color: #fff;
 }

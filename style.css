@@ -61,14 +61,14 @@ h2 {
   align-items: center;
 }
 
-.currentDayTaskList li {
+.tasksList li {
   background-color: #fff;
   margin-bottom: 1rem;
   border-radius: 1rem;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.currentDayTaskList > li {
+.tasksList > li {
   padding-left: 1rem;
 }
 
@@ -80,7 +80,7 @@ h2 {
   width: 10rem;
 }
 
-.addnewTask button {
+button {
   height: 100%;
   width: 100%;
   border-radius: 5rem;

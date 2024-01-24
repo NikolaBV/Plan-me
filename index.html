@@ -14,20 +14,13 @@
     <div class="columns">
       <div class="side-column">
         <h2>Today</h2>
-        <ul class="currentDayTaskList">
-          <li>
-            <p>17:30</p>
-            <p>Task 1</p>
-          </li>
-          <li>
-            <p>17:30</p>
-            <p>Task 1</p>
-          </li>
-        </ul>
+        <ul class="tasksList" id="todayTasks"></ul>
         <div class="addnewTask">
-          <button id="addTaskButton" onclick="openAddTaskPage()">
-            Add a new task
-          </button>
+          <form>
+            <input type="text" id="title" placeholder="title" />
+            <input type="date" id="whenTask" placeholder="when" />
+            <button id="btn" type="button">Add a new task</button>
+          </form>
         </div>
       </div>
 
@@ -37,7 +30,7 @@
 
       <div class="side-column">
         <h2>Tomorrow</h2>
-        <ul class="currentDayTaskList">
+        <ul class="currentDayTaskList" id="todayTasks">
           <li>
             <p>17:30</p>
             <p>Task 1</p>
@@ -50,9 +43,7 @@
       </div>
     </div>
   </body>
-  <script>
-    const { ipcRenderer } = require("electron");
-  </script>
+  <script src="renderer.js"></script>
   <script>
     function openAddTaskPage() {
       // Send an event to the main process to open the addTasks.html window

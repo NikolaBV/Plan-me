@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, autoUpdater } = require("electron");
 const path = require("path");
 const Store = require("electron-store");
 
@@ -10,7 +10,7 @@ function createMainWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    resizable: false,
+    resizable: true,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: true,

@@ -73,11 +73,37 @@ h2 {
 }
 
 .addnewTask {
+  height: 100%;
+  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 2.5rem;
-  width: 10rem;
+  flex-direction: column; /* Display children in a column layout */
+}
+
+.addnewTask label {
+  margin-bottom: 0.5rem;
+}
+
+.addnewTask input {
+  margin-bottom: 0.5rem;
+  height: 2rem;
+  border-radius: 3rem;
+}
+
+.addnewTask button {
+  height: 2rem; /* Adjust the height to match the input fields */
+  width: 100%;
+  border-radius: 5rem;
+  border: 3px solid black;
+  background-color: #fff;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 350ms ease-in-out, color 350ms ease-in-out;
+}
+
+.addnewTask button:hover {
+  background-color: black;
+  color: #fff;
 }
 
 button {

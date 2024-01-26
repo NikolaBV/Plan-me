@@ -4,6 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var calendarEl = document.getElementById("calendar");
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: "dayGridMonth",
+          dateClick: function (info) {
+            // Use the load dates for the current and day after the current day here
+            alert("Clicked on: " + info.dateStr);
+          },
+        });
+        calendar.render();
+      });
+    </script>
     <title>Plan me!</title>
   </head>
   <body>
@@ -28,6 +42,7 @@
 
       <div class="main-column">
         <h1>Calendar</h1>
+        <div id="calendar"></div>
       </div>
 
       <div class="side-column">

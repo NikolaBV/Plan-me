@@ -114,3 +114,15 @@ function createTaskItem(task) {
 
   return newTaskItem;
 }
+//Calendar functionallity
+document.addEventListener("DOMContentLoaded", function () {
+  var calendarEl = document.getElementById("calendar");
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: "dayGridMonth",
+    dateClick: function (info) {
+      // Use the load dates for the current and day after the current day here
+      alert("Clicked on: " + info.dateStr);
+    },
+  });
+  calendar.render();
+});

@@ -64,8 +64,21 @@ function saveTask(task) {
 
 function loadTasks() {
   // Get existing tasks from localStorage
+  const existingTasksInString = localStorage.getItem("tasks") || [];
   const existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  let monthNumber;
+  let dayNumber;
+  /*
 
+  Experimental code
+
+  existingTasks.forEach((element) => {
+    monthNumber = element.whenTask[5] + element.whenTask[6];
+    dayNumber = element.whenTask[8] + element.whenTask[9];
+    console.log(monthNumber);
+    console.log(dayNumber);
+  });
+*/
   // Populate tasks from localStorage on app start
   existingTasks.forEach((task) => {
     const newTaskItem = createTaskItem(task);
@@ -121,8 +134,28 @@ document.addEventListener("DOMContentLoaded", function () {
     initialView: "dayGridMonth",
     dateClick: function (info) {
       // Use the load dates for the current and day after the current day here
-      alert("Clicked on: " + info.dateStr);
+      monthNumber = info.dateStr[5] + info.dateStr[6];
+      dayNumber = info.dateStr[8] + info.dateStr[9];
+      loadCurrentDayTasks(dayNumber, monthNumber);
     },
   });
   calendar.render();
 });
+function loadCurrentDayTasks(dayNumber, monthNumber) {
+  const existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+  // Clears the tasklist
+  tasksList.innerHTML = "";
+
+  existingTasks.forEach((task) => {
+    if (
+      task.whenTask.substring(5, 7) !== monthNumber ||
+      task.whenTask.substring(8, 10) !== dayNumber
+    ) {
+      return;
+    } else {
+      const newTaskItem = createTaskItem(task);
+      tasksList.appendChild(newTaskItem);
+    }
+  });
+}

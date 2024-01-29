@@ -15,7 +15,7 @@
     <div class="columns">
       <div class="side-column">
         <h2>Today</h2>
-        <ul class="tasksList" id="todayTasks"></ul>
+        <ul class="tasksList tasks" id="todayTasks"></ul>
         <div class="addnewTask">
           <form>
             <label for="title">Name</label>
@@ -28,22 +28,14 @@
       </div>
 
       <div class="main-column">
-        <h1>Calendar</h1>
         <div id="calendar"></div>
       </div>
 
       <div class="side-column">
         <h2>Tomorrow</h2>
-        <ul class="currentDayTaskList" id="todayTasks">
-          <li>
-            <p>17:30</p>
-            <p>Task 1</p>
-          </li>
-          <li>
-            <p>17:30</p>
-            <p>Task 1</p>
-          </li>
-        </ul>
+        <div class="addnewTask">
+          <ul class="tomorrowTasksList tasks" id="todayTasks"></ul>
+        </div>
       </div>
     </div>
   </body>

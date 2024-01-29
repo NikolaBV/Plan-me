@@ -71,22 +71,20 @@ function loadTasks() {
   const today = currentDay.getDate();
   const month = currentDay.getMonth() + 1;
 
-  //This will be done on loading
+  // This will be done on loading
   existingTasks.forEach((task) => {
-    // Check if the task's date is tomorrow
-    console.log(task.whenTask);
-    const taskDay = task.whenTask[8] + task.whenTask[9];
+    const taskDay = parseInt(task.whenTask.substring(8, 10), 10);
+    console.log("taskday: " + taskDay + " today + 1: " + (today + 1));
+    console.log("task.whenTask[6]: " + task.whenTask[6] + " month: " + month);
 
-    if (task.whenTask[6] === month && taskDay === taskDay + 1) {
-      const newTaskItem = createTaskItem(task);
-      tomorrowTasksList.appendChild(newTaskItem);
+    if (task.whenTask[6] == month && taskDay === today + 1) {
+      // Create a new task item for tomorrow
+      appendTaskToTomorrowList(task);
+    } else {
+      // Create a new task item for today
+      const newTaskItemToday = createTaskItem(task);
+      tasksList.appendChild(newTaskItemToday);
     }
-  });
-
-  // Populate tasks from localStorage on app start
-  existingTasks.forEach((task) => {
-    const newTaskItem = createTaskItem(task);
-    tasksList.appendChild(newTaskItem);
   });
 }
 
@@ -141,9 +139,6 @@ document.addEventListener("DOMContentLoaded", function () {
       monthNumber = info.dateStr[5] + info.dateStr[6];
       dayNumber = info.dateStr[8] + info.dateStr[9];
       loadCurrentDayTasks(dayNumber, monthNumber);
-
-      //TODO Doesnt work yet
-      loadTomorrowTasks(dayNumber, monthNumber);
     },
   });
   calendar.render();
@@ -169,3 +164,8 @@ function loadCurrentDayTasks(dayNumber, monthNumber) {
 
 //TODO implement it similar to the loadTasks foreach loop but on clicking the calendar
 function loadTomorrowTasks() {}
+
+function appendTaskToTomorrowList(task) {
+  const newTaskItemTomorrow = createTaskItem(task);
+  tomorrowTasksList.appendChild(newTaskItemTomorrow.cloneNode(true));
+}

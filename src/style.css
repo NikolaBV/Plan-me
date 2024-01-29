@@ -61,14 +61,14 @@ h2 {
   align-items: center;
 }
 
-.tasksList li {
+.tasks li {
   background-color: #fff;
   margin-bottom: 1rem;
   border-radius: 1rem;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.tasksList > li {
+.tasks > li {
   padding-left: 1rem;
 }
 

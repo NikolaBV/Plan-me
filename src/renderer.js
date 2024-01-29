@@ -77,7 +77,7 @@ function loadTasks() {
     console.log("taskday: " + taskDay + " today + 1: " + (today + 1));
     console.log("task.whenTask[6]: " + task.whenTask[6] + " month: " + month);
 
-    if (task.whenTask[6] == month && taskDay === today + 1) {
+    if (task.whenTask[6] === month && taskDay === today + 1) {
       // Create a new task item for tomorrow
       appendTaskToTomorrowList(task);
     } else {

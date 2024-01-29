@@ -2,6 +2,7 @@ const setButton = document.getElementById("btn");
 const titleInput = document.getElementById("title");
 const whenTaskInput = document.getElementById("whenTask");
 const tasksList = document.querySelector(".tasksList");
+const tomorrowTasksList = document.querySelector(".tomorrowTasksList");
 
 // Load existing tasks from localStorage when the app starts
 document.addEventListener("DOMContentLoaded", () => {
@@ -42,6 +43,7 @@ setButton.addEventListener("click", () => {
 
   // Append the new <li> element to the <ul> element
   tasksList.appendChild(newTaskItem);
+  tomorrowTasksList.appendChild(newTaskItem);
 
   // Save the new task to localStorage
   saveTask({ title, whenTask });
@@ -64,21 +66,23 @@ function saveTask(task) {
 
 function loadTasks() {
   // Get existing tasks from localStorage
-  const existingTasksInString = localStorage.getItem("tasks") || [];
   const existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  let monthNumber;
-  let dayNumber;
-  /*
+  const currentDay = new Date();
+  const today = currentDay.getDate();
+  const month = currentDay.getMonth() + 1;
 
-  Experimental code
+  //This will be done on loading
+  existingTasks.forEach((task) => {
+    // Check if the task's date is tomorrow
+    console.log(task.whenTask);
+    const taskDay = task.whenTask[8] + task.whenTask[9];
 
-  existingTasks.forEach((element) => {
-    monthNumber = element.whenTask[5] + element.whenTask[6];
-    dayNumber = element.whenTask[8] + element.whenTask[9];
-    console.log(monthNumber);
-    console.log(dayNumber);
+    if (task.whenTask[6] === month && taskDay === taskDay + 1) {
+      const newTaskItem = createTaskItem(task);
+      tomorrowTasksList.appendChild(newTaskItem);
+    }
   });
-*/
+
   // Populate tasks from localStorage on app start
   existingTasks.forEach((task) => {
     const newTaskItem = createTaskItem(task);
@@ -137,6 +141,9 @@ document.addEventListener("DOMContentLoaded", function () {
       monthNumber = info.dateStr[5] + info.dateStr[6];
       dayNumber = info.dateStr[8] + info.dateStr[9];
       loadCurrentDayTasks(dayNumber, monthNumber);
+
+      //TODO Doesnt work yet
+      loadTomorrowTasks(dayNumber, monthNumber);
     },
   });
   calendar.render();
@@ -159,3 +166,6 @@ function loadCurrentDayTasks(dayNumber, monthNumber) {
     }
   });
 }
+
+//TODO implement it similar to the loadTasks foreach loop but on clicking the calendar
+function loadTomorrowTasks() {}

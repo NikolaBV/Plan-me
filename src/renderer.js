@@ -43,7 +43,6 @@ setButton.addEventListener("click", () => {
 
   // Append the new <li> element to the <ul> element
   tasksList.appendChild(newTaskItem);
-  tomorrowTasksList.appendChild(newTaskItem);
 
   // Save the new task to localStorage
   saveTask({ title, whenTask });
@@ -73,11 +72,17 @@ function loadTasks() {
 
   // This will be done on loading
   existingTasks.forEach((task) => {
-    const taskDay = parseInt(task.whenTask.substring(8, 10), 10);
-    console.log("taskday: " + taskDay + " today + 1: " + (today + 1));
-    console.log("task.whenTask[6]: " + task.whenTask[6] + " month: " + month);
+    const taskDate = new Date(task.whenTask);
+    const taskDay = taskDate.getDate();
+    const taskMonth = taskDate.getMonth() + 1;
 
-    if (task.whenTask[6] == month && taskDay === today + 1) {
+    const isTomorrow =
+      (taskMonth === month && taskDay - today === 1) || // Tomorrow in the same month
+      (taskMonth - month === 1 &&
+        today === getLastDayOfMonth(month) &&
+        taskDay === 1); // Tomorrow when today is the last day of the month
+
+    if (isTomorrow) {
       // Create a new task item for tomorrow
       appendTaskToTomorrowList(task);
     } else {
@@ -168,4 +173,9 @@ function loadTomorrowTasks() {}
 function appendTaskToTomorrowList(task) {
   const newTaskItemTomorrow = createTaskItem(task);
   tomorrowTasksList.appendChild(newTaskItemTomorrow.cloneNode(true));
+}
+function getLastDayOfMonth(month) {
+  const nextMonthFirstDay = new Date(new Date().getFullYear(), month, 1);
+  const lastDay = new Date(nextMonthFirstDay - 1);
+  return lastDay.getDate();
 }

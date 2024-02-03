@@ -57,7 +57,7 @@ setButton.addEventListener("click", () => {
   // Append the new <li> element to the <ul> element
 
   if (isTomorrow) {
-    appendTaskToTomorrowList(newTaskItem);
+    tomorrowTasksList.appendChild(newTaskItem);
   } else {
     tasksList.appendChild(newTaskItem);
   }
@@ -192,4 +192,9 @@ function loadTomorrowTasks() {}
 function appendTaskToTomorrowList(task) {
   const newTaskItemTomorrow = createTaskItem(task);
   tomorrowTasksList.appendChild(newTaskItemTomorrow);
+}
+function getLastDayOfMonth(month) {
+  const nextMonthFirstDay = new Date(new Date().getFullYear(), month, 1);
+  const lastDay = new Date(nextMonthFirstDay - 1);
+  return lastDay.getDate();
 }

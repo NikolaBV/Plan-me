@@ -160,24 +160,34 @@ document.addEventListener("DOMContentLoaded", function () {
     initialView: "dayGridMonth",
     dateClick: function (info) {
       // Use the load dates for the current and day after the current day here
-      monthNumber = info.dateStr[5] + info.dateStr[6];
-      dayNumber = info.dateStr[8] + info.dateStr[9];
+      monthNumber =
+        info.dateStr[5] == 0
+          ? info.dateStr[6]
+          : info.dateStr[5] + info.dateStr[6];
+      //If the date begins with "0" the zero is stripped away
+      dayNumber =
+        info.dateStr[8] == 0
+          ? info.dateStr[9]
+          : info.dateStr[8] + info.dateStr[9];
+
       loadCurrentDayTasks(dayNumber, monthNumber);
+      loadTomorrowTasks(dayNumber, monthNumber);
     },
   });
   calendar.render();
 });
-function loadCurrentDayTasks(dayNumber, monthNumber) {
+function loadCurrentDayTasks(clickedDayNumber, clickedMonthNumber) {
   const existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
   // Clears the tasklist
   tasksList.innerHTML = "";
 
   existingTasks.forEach((task) => {
-    if (
-      task.whenTask.substring(5, 7) !== monthNumber ||
-      task.whenTask.substring(8, 10) !== dayNumber
-    ) {
+    const taskDate = new Date(task.whenTask);
+    const taskDay = taskDate.getDate();
+    const taskMonth = taskDate.getMonth() + 1;
+
+    if (taskMonth != clickedMonthNumber || taskDay != clickedDayNumber) {
       return;
     } else {
       const newTaskItem = createTaskItem(task);
@@ -187,7 +197,29 @@ function loadCurrentDayTasks(dayNumber, monthNumber) {
 }
 
 //TODO implement it similar to the loadTasks foreach loop but on clicking the calendar
-function loadTomorrowTasks() {}
+function loadTomorrowTasks(clickedDayNumber, clickedMonthNumber) {
+  const existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+  // Clears the tasklist
+  tomorrowTasksList.innerHTML = "";
+  existingTasks.forEach((task) => {
+    const taskDate = new Date(task.whenTask);
+    const taskDay = taskDate.getDate();
+    const taskMonth = taskDate.getMonth() + 1;
+
+    console.log("Task Day: " + taskDay + " Task month: " + taskMonth);
+    console.log(
+      "Clicked day: " +
+        clickedDayNumber +
+        " Clicked month: " +
+        clickedMonthNumber
+    );
+    if (taskDay - clickedDayNumber === 1) {
+      const newTaskItem = createTaskItem(task);
+      tomorrowTasksList.appendChild(newTaskItem);
+    }
+  });
+}
 
 function appendTaskToTomorrowList(task) {
   const newTaskItemTomorrow = createTaskItem(task);

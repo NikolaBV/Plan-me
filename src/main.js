@@ -8,6 +8,14 @@ const {
 const path = require("path");
 const Store = require("electron-store");
 
+if (process.env.GITHUB_TOKEN) {
+  console.log("GitHub token is set:", process.env.GITHUB_TOKEN);
+} else {
+  console.log(
+    "GitHub token is not set. Please set the GITHUB_TOKEN environment variable."
+  );
+}
+
 const store = new Store();
 let mainWindow;
 

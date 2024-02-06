@@ -159,24 +159,25 @@ document.addEventListener("DOMContentLoaded", function () {
   var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "dayGridMonth",
     dateClick: function (info) {
-      // Use the load dates for the current and day after the current day here
-      monthNumber =
-        info.dateStr[5] == 0
-          ? info.dateStr[6]
-          : info.dateStr[5] + info.dateStr[6];
-      //If the date begins with "0" the zero is stripped away
-      dayNumber =
-        info.dateStr[8] == 0
-          ? info.dateStr[9]
-          : info.dateStr[8] + info.dateStr[9];
+      const clickedDate = new Date(info.dateStr);
+      const clickedDay = clickedDate.getDate();
+      const clickedMonth = clickedDate.getMonth() + 1;
 
-      loadCurrentDayTasks(dayNumber, monthNumber);
-      loadTomorrowTasks(dayNumber, monthNumber);
+      const tomorrowDay = clickedDate.getDate();
+      const tommorowMonthmonth = clickedDate.getMonth();
+      const tommorowYear = clickedDate.getFullYear();
+      const tomorrowDate = new Date(
+        tommorowYear,
+        tommorowMonthmonth,
+        tomorrowDay + 1
+      );
+      loadCurrentDayTasks(clickedDay, clickedMonth);
+      loadTomorrowTasks(clickedDate, tomorrowDate);
     },
   });
   calendar.render();
 });
-function loadCurrentDayTasks(clickedDayNumber, clickedMonthNumber) {
+function loadCurrentDayTasks(clickedDay, clickedMonth) {
   const existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
   // Clears the tasklist
@@ -187,7 +188,7 @@ function loadCurrentDayTasks(clickedDayNumber, clickedMonthNumber) {
     const taskDay = taskDate.getDate();
     const taskMonth = taskDate.getMonth() + 1;
 
-    if (taskMonth != clickedMonthNumber || taskDay != clickedDayNumber) {
+    if (taskMonth != clickedMonth || taskDay != clickedDay) {
       return;
     } else {
       const newTaskItem = createTaskItem(task);
@@ -197,24 +198,22 @@ function loadCurrentDayTasks(clickedDayNumber, clickedMonthNumber) {
 }
 
 //TODO implement it similar to the loadTasks foreach loop but on clicking the calendar
-function loadTomorrowTasks(clickedDayNumber, clickedMonthNumber) {
+function loadTomorrowTasks(clickedDate, tomorrowDate) {
   const existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
+  console.log(clickedDate);
+  console.log(tomorrowDate.getDate());
   // Clears the tasklist
   tomorrowTasksList.innerHTML = "";
+
   existingTasks.forEach((task) => {
     const taskDate = new Date(task.whenTask);
     const taskDay = taskDate.getDate();
     const taskMonth = taskDate.getMonth() + 1;
 
-    console.log("Task Day: " + taskDay + " Task month: " + taskMonth);
-    console.log(
-      "Clicked day: " +
-        clickedDayNumber +
-        " Clicked month: " +
-        clickedMonthNumber
-    );
-    if (taskDay - clickedDayNumber === 1) {
+    const isTomorrow =
+      taskDay == tomorrowDate.getDate() &&
+      taskMonth == tomorrowDate.getMonth() + 1;
+    if (isTomorrow) {
       const newTaskItem = createTaskItem(task);
       tomorrowTasksList.appendChild(newTaskItem);
     }

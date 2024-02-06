@@ -1,10 +1,11 @@
-const { app, BrowserWindow, ipcMain, autoUpdater } = require("electron");
+const electron = require("electron");
+const { app, BrowserWindow, protocol } = electron;
+const { autoUpdater } = require("update-electron-app");
 const path = require("path");
 const Store = require("electron-store");
 
 const store = new Store();
 let mainWindow;
-let addTaskWindow;
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
@@ -18,54 +19,18 @@ function createMainWindow() {
     },
   });
 
-  mainWindow.loadFile("index.html");
+  mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   mainWindow.on("closed", function () {
     mainWindow = null;
   });
 }
 
-function createAddTaskWindow() {
-  addTaskWindow = new BrowserWindow({
-    title: "Add a task",
-    width: 800,
-    height: 600,
-    resizable: true,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: true,
-    },
-  });
-
-  addTaskWindow.loadFile("addTasks.html");
-
-  addTaskWindow.on("closed", function () {
-    addTaskWindow = null;
-  });
-}
-
 app.on("ready", () => {
   createMainWindow();
-
-  ipcMain.on("open-add-task-window", () => {
-    createAddTaskWindow();
-  });
-
-  ipcMain.on("add-task", (event, task) => {
-    const tasks = store.get("tasks", []);
-    tasks.push(task);
-    store.set("tasks", tasks);
-
-    // Send the updated tasks to the mainWindow
-    mainWindow.webContents.send("update-tasks", tasks);
-
-    // Send the task data to the index.html renderer process
-    mainWindow.webContents.send("log-task", task);
-
-    // Send the task data to the addTasks.html renderer process
-    if (addTaskWindow) {
-      addTaskWindow.webContents.send("log-task", task);
-    }
+  protocol.registerFileProtocol("electron", (request, callback) => {
+    const url = request.url.substr(11); // Strip off 'electron://'
+    callback({ path: path.normalize(`${__dirname}/src/${url}`) });
   });
 });
 

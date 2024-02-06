@@ -159,25 +159,36 @@ document.addEventListener("DOMContentLoaded", function () {
   var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "dayGridMonth",
     dateClick: function (info) {
-      // Use the load dates for the current and day after the current day here
-      monthNumber = info.dateStr[5] + info.dateStr[6];
-      dayNumber = info.dateStr[8] + info.dateStr[9];
-      loadCurrentDayTasks(dayNumber, monthNumber);
+      const clickedDate = new Date(info.dateStr);
+      const clickedDay = clickedDate.getDate();
+      const clickedMonth = clickedDate.getMonth() + 1;
+
+      const tomorrowDay = clickedDate.getDate();
+      const tommorowMonthmonth = clickedDate.getMonth();
+      const tommorowYear = clickedDate.getFullYear();
+      const tomorrowDate = new Date(
+        tommorowYear,
+        tommorowMonthmonth,
+        tomorrowDay + 1
+      );
+      loadCurrentDayTasks(clickedDay, clickedMonth);
+      loadTomorrowTasks(clickedDate, tomorrowDate);
     },
   });
   calendar.render();
 });
-function loadCurrentDayTasks(dayNumber, monthNumber) {
+function loadCurrentDayTasks(clickedDay, clickedMonth) {
   const existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
   // Clears the tasklist
   tasksList.innerHTML = "";
 
   existingTasks.forEach((task) => {
-    if (
-      task.whenTask.substring(5, 7) !== monthNumber ||
-      task.whenTask.substring(8, 10) !== dayNumber
-    ) {
+    const taskDate = new Date(task.whenTask);
+    const taskDay = taskDate.getDate();
+    const taskMonth = taskDate.getMonth() + 1;
+
+    if (taskMonth != clickedMonth || taskDay != clickedDay) {
       return;
     } else {
       const newTaskItem = createTaskItem(task);
@@ -187,7 +198,27 @@ function loadCurrentDayTasks(dayNumber, monthNumber) {
 }
 
 //TODO implement it similar to the loadTasks foreach loop but on clicking the calendar
-function loadTomorrowTasks() {}
+function loadTomorrowTasks(clickedDate, tomorrowDate) {
+  const existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  console.log(clickedDate);
+  console.log(tomorrowDate.getDate());
+  // Clears the tasklist
+  tomorrowTasksList.innerHTML = "";
+
+  existingTasks.forEach((task) => {
+    const taskDate = new Date(task.whenTask);
+    const taskDay = taskDate.getDate();
+    const taskMonth = taskDate.getMonth() + 1;
+
+    const isTomorrow =
+      taskDay == tomorrowDate.getDate() &&
+      taskMonth == tomorrowDate.getMonth() + 1;
+    if (isTomorrow) {
+      const newTaskItem = createTaskItem(task);
+      tomorrowTasksList.appendChild(newTaskItem);
+    }
+  });
+}
 
 function appendTaskToTomorrowList(task) {
   const newTaskItemTomorrow = createTaskItem(task);

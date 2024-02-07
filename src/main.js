@@ -1,10 +1,6 @@
-const electron = require("electron");
-const { app, BrowserWindow, protocol } = electron;
-const { autoUpdater } = require("update-electron-app");
+const { app, protocol, BrowserWindow } = require("electron");
 const path = require("path");
-const Store = require("electron-store");
 
-const store = new Store();
 let mainWindow;
 
 function createMainWindow() {

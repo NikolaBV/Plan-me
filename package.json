@@ -27,8 +27,6 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
-    "electron-store": "^8.1.0",
-    "fullcalendar": "^6.1.10",
     "update-electron-app": "^3.0.0"
   }
 }

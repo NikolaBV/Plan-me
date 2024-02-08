@@ -10,7 +10,6 @@ function createMainWindow() {
     resizable: true,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: true,
       preload: path.join(__dirname, "preload.js"),
     },
   });

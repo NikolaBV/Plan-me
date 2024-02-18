@@ -41,26 +41,41 @@
   </body>
   <script src="renderer.js"></script>
   <script>
-    if ("geolocation" in navigator) {
-      // Geolocation is available
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          // Get the latitude and longitude from the position object
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
+    var latitude;
+    var longitude;
+    // Geolocation is available
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        // Get the latitude and longitude from the position object
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
 
-          // Print the latitude and longitude to the console
-          console.log("Latitude: ", latitude);
-          console.log("Longitude: ", longitude);
-        },
-        function (error) {
-          // Handle any errors that occur during the process
-          console.error("Error getting geolocation:", error);
-        }
-      );
-    } else {
-      // Geolocation is not supported by this browser
-      console.error("Geolocation is not supported by your browser");
-    }
+        const apiKey = "1c819253551a19c3b0292f82e93a962d";
+
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+        console.log(latitude + " " + longitude);
+
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((error) => {
+            console.error(
+              "There was a problem with the fetch operation:",
+              error
+            );
+          });
+      },
+      function (error) {
+        // Handle any errors that occur during the process
+        console.error("Error getting geolocation:", error);
+      }
+    );
   </script>
 </html>

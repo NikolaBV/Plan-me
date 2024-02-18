@@ -41,9 +41,26 @@
   </body>
   <script src="renderer.js"></script>
   <script>
-    function openAddTaskPage() {
-      // Send an event to the main process to open the addTasks.html window
-      ipcRenderer.send("open-add-task-window");
+    if ("geolocation" in navigator) {
+      // Geolocation is available
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          // Get the latitude and longitude from the position object
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          // Print the latitude and longitude to the console
+          console.log("Latitude: ", latitude);
+          console.log("Longitude: ", longitude);
+        },
+        function (error) {
+          // Handle any errors that occur during the process
+          console.error("Error getting geolocation:", error);
+        }
+      );
+    } else {
+      // Geolocation is not supported by this browser
+      console.error("Geolocation is not supported by your browser");
     }
   </script>
 </html>

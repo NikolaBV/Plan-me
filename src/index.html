@@ -5,11 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+    <script src="weatherIconLoader.js"></script>
     <title>Plan me!</title>
   </head>
   <body>
     <header>
-      <h1>Plan me!</h1>
+      <div class="left weather">
+        <img id="weatherImage" />
+        <p id="temperature">Plovdiv</p>
+      </div>
+      <div class="center">
+        <h1>Plan me!</h1>
+      </div>
+      <div class="right">
+        <p>Right</p>
+      </div>
     </header>
 
     <div class="columns">
@@ -41,6 +51,7 @@
   </body>
   <script src="renderer.js"></script>
   <script>
+    /*
     var latitude;
     var longitude;
     // Geolocation is available
@@ -77,5 +88,6 @@
         console.error("Error getting geolocation:", error);
       }
     );
+    */
   </script>
 </html>

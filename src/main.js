@@ -1,4 +1,4 @@
-const { app, protocol, BrowserWindow } = require("electron");
+const { app, protocol, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 require("dotenv").config();
 

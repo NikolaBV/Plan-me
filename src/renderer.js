@@ -105,12 +105,9 @@ function loadTasks() {
     if (isTomorrow) {
       // Create a new task item for tomorrow
       appendTaskToTomorrowList(task);
-      console.log(task);
     } else {
       // Create a new task item for today
       const newTaskItemToday = createTaskItem(task);
-      console.log(task);
-
       tasksList.appendChild(newTaskItemToday);
     }
   });

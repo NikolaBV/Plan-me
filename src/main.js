@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Notification } = require("electron");
+const { app, BrowserWindow } = require("electron");
 const path = require("path");
 require("dotenv").config();
 
@@ -8,6 +8,7 @@ function createMainWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    icon: path.join(__dirname, "resources", "icon.png"),
     resizable: true,
     show: false,
     webPreferences: {
@@ -24,9 +25,6 @@ function createMainWindow() {
     mainWindow = null;
   });
 }
-
-const NOTIFICATION_TITLE = "Basic Notification";
-const NOTIFICATION_BODY = "Notification from the Main process";
 
 app.whenReady().then(createMainWindow);
 

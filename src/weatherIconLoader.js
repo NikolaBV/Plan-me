@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
       longitude = position.coords.longitude;
 
       const apiKey = "";
-      console.log(apiKey);
 
       const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
       console.log(latitude + " " + longitude);

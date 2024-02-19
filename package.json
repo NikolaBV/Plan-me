@@ -1,5 +1,6 @@
 {
   "name": "Plan-me",
+  "productName": "Plan-me",
   "version": "1.0.0",
   "repository": "Plan-me",
   "main": "src/main.js",

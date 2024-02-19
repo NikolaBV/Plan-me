@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
       latitude = position.coords.latitude;
       longitude = position.coords.longitude;
 
-      const apiKey = "1c819253551a19c3b0292f82e93a962d";
+      const apiKey = "";
 
       const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
       console.log(latitude + " " + longitude);
@@ -21,8 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
           return response.json();
         })
         .then((data) => {
-          console.log(data);
-
           setIcon(data.weather[0].main);
           setTemperature(data.main.temp, data.name);
         })

@@ -7,6 +7,7 @@ const tomorrowTasksList = document.querySelector(".tomorrowTasksList");
 // Load existing tasks from localStorage when the app starts
 document.addEventListener("DOMContentLoaded", () => {
   loadTasks();
+  setInterval(checkTasks, 60000);
 });
 
 setButton.addEventListener("click", () => {
@@ -228,4 +229,29 @@ function getLastDayOfMonth(month) {
   const nextMonthFirstDay = new Date(new Date().getFullYear(), month, 1);
   const lastDay = new Date(nextMonthFirstDay - 1);
   return lastDay.getDate();
+}
+
+function showTaskNotification(taskName, taskTime) {
+  const NOTIFICATION_TITLE = taskName + " in 30 minutes!";
+  const NOTIFICATION_BODY = taskTime;
+
+  new window.Notification(NOTIFICATION_TITLE, {
+    body: NOTIFICATION_BODY,
+  });
+}
+function checkTasks() {
+  const existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  const currentTime = new Date();
+
+  existingTasks.forEach((task) => {
+    const taskTime = new Date(task.whenTask);
+    const timeDifference = taskTime - currentTime;
+    const minutesDifference = Math.floor(
+      (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
+    );
+
+    if (minutesDifference === 30) {
+      showTaskNotification(task.title, task.whenTask);
+    }
+  });
 }

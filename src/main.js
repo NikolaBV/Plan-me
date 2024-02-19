@@ -1,4 +1,4 @@
-const { app, protocol, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, Notification } = require("electron");
 const path = require("path");
 require("dotenv").config();
 
@@ -9,6 +9,7 @@ function createMainWindow() {
     width: 800,
     height: 600,
     resizable: true,
+    show: false,
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, "preload.js"),
@@ -16,19 +17,18 @@ function createMainWindow() {
   });
 
   mainWindow.loadURL(`file://${__dirname}/index.html`);
-
+  mainWindow.once("ready-to-show", () => {
+    mainWindow.show();
+  });
   mainWindow.on("closed", function () {
     mainWindow = null;
   });
 }
 
-app.on("ready", () => {
-  createMainWindow();
-  protocol.registerFileProtocol("electron", (request, callback) => {
-    const url = request.url.substr(11); // Strip off 'electron://'
-    callback({ path: path.normalize(`${__dirname}/src/${url}`) });
-  });
-});
+const NOTIFICATION_TITLE = "Basic Notification";
+const NOTIFICATION_BODY = "Notification from the Main process";
+
+app.whenReady().then(createMainWindow);
 
 app.on("window-all-closed", function () {
   if (process.platform !== "darwin") app.quit();

@@ -104,9 +104,13 @@ function loadTasks() {
     if (isTomorrow) {
       // Create a new task item for tomorrow
       appendTaskToTomorrowList(task);
+      console.log(task);
+      showTaskNotification(task.title, task.whenTask);
     } else {
       // Create a new task item for today
       const newTaskItemToday = createTaskItem(task);
+      console.log(task);
+      showTaskNotification(task.title, task.whenTask);
       tasksList.appendChild(newTaskItemToday);
     }
   });
@@ -228,4 +232,13 @@ function getLastDayOfMonth(month) {
   const nextMonthFirstDay = new Date(new Date().getFullYear(), month, 1);
   const lastDay = new Date(nextMonthFirstDay - 1);
   return lastDay.getDate();
+}
+
+function showTaskNotification(taskName, taskTime) {
+  const NOTIFICATION_TITLE = taskName;
+  const NOTIFICATION_BODY = taskTime;
+
+  new window.Notification(NOTIFICATION_TITLE, {
+    body: NOTIFICATION_BODY,
+  });
 }

@@ -1,7 +1,6 @@
-const { app, protocol, BrowserWindow } = require("electron");
+const { app, protocol, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 require("dotenv").config();
-console.log(process.env.GOOGLE_API_KEY);
 
 let mainWindow;
 

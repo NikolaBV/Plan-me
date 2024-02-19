@@ -25,13 +25,37 @@ header {
   background-color: #333;
   color: #fff;
   text-align: center;
-  padding: 20px;
   box-sizing: border-box;
+  display: flex;
+  justify-content: space-between; /* Arrange items with equal space between them */
+  align-items: center; /* Align items vertically at the center */
+  padding: 0 20px; /* Add padding to the header */
+}
+.left,
+.center,
+.right {
+  flex: 1; /* Each part takes up equal space */
+}
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.weather img {
+  height: 5rem;
+  width: 5rem;
+}
+.weather p {
+  display: flex;
+  font-weight: 1000;
 }
 
 .columns {
   display: flex;
-  min-height: 100vh; /* Set minimum height to 100% of viewport height */
+  /* Set minimum height to 100% of viewport height */
 }
 
 .side-column {
